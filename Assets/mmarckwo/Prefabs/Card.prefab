@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 7293524915480512939}
   - component: {fileID: 7293524915480512948}
   - component: {fileID: 7293524915480512936}
+  - component: {fileID: 1551409716}
+  - component: {fileID: 7516339620612176997}
   m_Layer: 0
   m_Name: Card
   m_TagString: Card
@@ -110,3 +112,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardType: fire
   cardNumber: 0
+--- !u!114 &1551409716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7293524915480512949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89ea405e977a52749b9d945cfa7558f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardType: fire
+  cardNumber: 0
+  FlipCard: 0
+--- !u!111 &7516339620612176997
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7293524915480512949}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: 690b90402f8c3814586f7b43247e1917, type: 2}
+  - {fileID: 7400000, guid: bb0b39a626ee6f54baa051bb6641eaa8, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0

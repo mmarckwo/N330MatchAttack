@@ -14,7 +14,6 @@ public class PlayerClick : MonoBehaviour
             {
                 if(hit.transform.tag == "Card")
                 {
-                    Debug.Log("Card clicked");
                     hit.collider.gameObject.GetComponent<CardBehavior>().CardFlip();
                 }
             }
