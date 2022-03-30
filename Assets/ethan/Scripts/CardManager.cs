@@ -17,13 +17,17 @@ public class CardManager : MonoBehaviour{
 	
 	void initializeCards(){
 		
-		int numberOfCards = cardRows*cardColumns;
+		//create CardState with corresponding GameObjects.
 		
+		//initial array of CardStates.
+		int numberOfCards = cardRows*cardColumns;
 		cards = new CardState[numberOfCards];
 		
+		//integer coordinates for cards.
 		int x = 0;
 		int z = 0;
 		
+		//floating point coordinates for card game objects.
 		float xPosStart = cardCenter.position.x-((float)(cardRows-1))*0.5f*cardOffsetWidth;
 		float zPosStart = cardCenter.position.z-((float)(cardColumns-1))*0.5f*cardOffsetHeight;
 		
@@ -32,11 +36,13 @@ public class CardManager : MonoBehaviour{
 		
 		for(int i = 0; i < numberOfCards; i++){
 			
+			//instantiate GameObject and CardState
 			GameObject instantiated = Object.Instantiate(cardObject, new Vector3(xPos,cardCenter.position.y,zPos), Quaternion.identity);
-			
-			cards[i] = new CardState(instantiated);
+			cards[i] = new CardState(instantiated,x,z);
 			
 			if((i & 0b1) != 0) cards[i].cardType = CardState.CARD_TYPE.WIND;
+			
+			//move to the next position.
 			
 			x++;
 			
