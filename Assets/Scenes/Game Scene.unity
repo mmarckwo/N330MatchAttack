@@ -438,11 +438,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2092366228 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7293524915480512949, guid: 8e415b85b4e8bd0448be4db16bdea645, type: 3}
-  m_PrefabInstance: {fileID: 7293524916489808795}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2092366234 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7293524915480512937, guid: 8e415b85b4e8bd0448be4db16bdea645, type: 3}
@@ -526,8 +521,9 @@ MonoBehaviour:
   cardColumns: 4
   cardOffsetWidth: 3
   cardOffsetHeight: 4
-  cardObject: {fileID: 2092366228}
+  cardObject: {fileID: 7293524915480512949, guid: 8e415b85b4e8bd0448be4db16bdea645, type: 3}
   cardCenter: {fileID: 2092366234}
+  startingTypes: 01000000010000000100000001000000010000000100000001000000010000000000000000000000000000000000000000000000000000000000000000000000
 --- !u!1001 &7293524916489808795
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -582,6 +578,10 @@ PrefabInstance:
     - target: {fileID: 7293524915480512949, guid: 8e415b85b4e8bd0448be4db16bdea645, type: 3}
       propertyPath: m_Name
       value: Card
+      objectReference: {fileID: 0}
+    - target: {fileID: 7293524915480512949, guid: 8e415b85b4e8bd0448be4db16bdea645, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e415b85b4e8bd0448be4db16bdea645, type: 3}

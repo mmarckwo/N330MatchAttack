@@ -38,10 +38,35 @@ public class CardState{
 	public int x; //horizontal
 	public int z; //vertical
 	
-	public CardState(GameObject _cardObject, int _x, int _z){
+	public CardState(GameObject _cardObject){
 		
 		//set our game object.
 		this.cardObject = _cardObject;
+		
+	}
+	
+	public void updateVisualPosition(CardManager manager){
+		
+		//set visual position of card
+		
+		Vector3 cardCenter = manager.cardCenter.position;
+		
+		float xPosStart = cardCenter.x-((float)(manager.cardRows-1))*0.5f*manager.cardOffsetWidth;
+		float zPosStart = cardCenter.z-((float)(manager.cardColumns-1))*0.5f*manager.cardOffsetHeight;
+		
+		float xPos = xPosStart + manager.cardOffsetWidth*this.x;
+		float zPos = zPosStart + manager.cardOffsetHeight*this.z;
+		
+		this.cardObject.transform.position = new Vector3(xPos,cardCenter.y,zPos);
+		
+	}
+	
+	public void setCoordinates(CardManager manager,int index){
+		
+		//from an index, set x and z coordinates
+		
+		this.x = index % manager.cardRows;
+		this.z = index / manager.cardRows;
 		
 	}
 	

@@ -10,10 +10,32 @@ public class CardManager : MonoBehaviour{
 	public int cardColumns = 4;
 	
 	public float cardOffsetWidth = 1.0f;
-	public float cardOffsetHeight = 1.0f;
+	public float cardOffsetHeight = 1.5f;
 	
 	public GameObject cardObject;
 	public Transform cardCenter;
+	
+	public CardState.CARD_TYPE[] startingTypes = {
+		
+		CardState.CARD_TYPE.NULL,
+		CardState.CARD_TYPE.NULL,
+		CardState.CARD_TYPE.NULL,
+		CardState.CARD_TYPE.NULL,
+		CardState.CARD_TYPE.NULL,
+		CardState.CARD_TYPE.NULL,
+		CardState.CARD_TYPE.NULL,
+		CardState.CARD_TYPE.NULL,
+		
+		CardState.CARD_TYPE.WIND,
+		CardState.CARD_TYPE.WIND,
+		CardState.CARD_TYPE.WIND,
+		CardState.CARD_TYPE.WIND,
+		CardState.CARD_TYPE.WIND,
+		CardState.CARD_TYPE.WIND,
+		CardState.CARD_TYPE.WIND,
+		CardState.CARD_TYPE.WIND,
+		
+	};
 	
 	void initializeCards(){
 		
@@ -23,42 +45,48 @@ public class CardManager : MonoBehaviour{
 		int numberOfCards = cardRows*cardColumns;
 		cards = new CardState[numberOfCards];
 		
-		//integer coordinates for cards.
-		int x = 0;
-		int z = 0;
-		
-		//floating point coordinates for card game objects.
-		float xPosStart = cardCenter.position.x-((float)(cardRows-1))*0.5f*cardOffsetWidth;
-		float zPosStart = cardCenter.position.z-((float)(cardColumns-1))*0.5f*cardOffsetHeight;
-		
-		float xPos = xPosStart;
-		float zPos = zPosStart;
-		
 		for(int i = 0; i < numberOfCards; i++){
 			
 			//instantiate GameObject and CardState
-			GameObject instantiated = Object.Instantiate(cardObject, new Vector3(xPos,cardCenter.position.y,zPos), Quaternion.identity);
-			cards[i] = new CardState(instantiated,x,z);
+			GameObject instantiated = Object.Instantiate(cardObject, new Vector3(0.0f,0.0f,0.0f), Quaternion.identity);
+			cards[i] = new CardState(instantiated);
 			
-			if((i & 0b1) != 0) cards[i].cardType = CardState.CARD_TYPE.WIND;
+			cards[i].cardType = startingTypes[i];
+			cards[i].setCoordinates(this,i);
 			
-			//move to the next position.
+		}
+		
+	}
+	
+	void shuffleCards(){
+		
+		//use Fischer-Yates shuffle algorithm.
+		
+		int numberOfCards = cardRows*cardColumns;
+		
+		for(int i = 0; i < numberOfCards-1; i++){
 			
-			x++;
+			int swapWith = Random.Range(i,numberOfCards-1);
 			
-			if(x == cardColumns){
-				
-				x = 0;
-				z++;
-				
-				xPos = xPosStart;
-				zPos += cardOffsetHeight;
-				
-			}else{
-				
-				xPos += cardOffsetWidth;
-				
-			}
+			CardState temp = cards[i];
+			cards[i] = cards[swapWith];
+			cards[swapWith] = temp;
+			
+			cards[i].setCoordinates(this,i);
+			
+		}
+		
+	}
+	
+	void updateAllVisuals(){
+		
+		//update visual poisition of cards.
+		
+		int numberOfCards = cardRows*cardColumns;
+		
+		for(int i = 0; i < numberOfCards; i++){
+			
+			cards[i].updateVisualPosition(this);
 			
 		}
 		
@@ -67,6 +95,8 @@ public class CardManager : MonoBehaviour{
 	void Start(){
 		
 		initializeCards();
+		shuffleCards();
+		updateAllVisuals();
 		
 	}
 	
