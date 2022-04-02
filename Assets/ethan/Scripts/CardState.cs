@@ -33,6 +33,7 @@ public class CardState{
 	
 	//the game object that contains the models/textures/etc for the card object.
 	public GameObject cardObject;
+	public CardBehavior cardBehavior;
 	
 	//coordinates for where the card is on the grid.
 	public int x; //horizontal
@@ -42,6 +43,7 @@ public class CardState{
 		
 		//set our game object.
 		this.cardObject = _cardObject;
+		this.cardBehavior = this.cardObject.transform.GetChild(0).gameObject.GetComponent<CardBehavior>();
 		
 	}
 	
@@ -60,6 +62,30 @@ public class CardState{
 		this.cardObject.transform.position = new Vector3(xPos,cardCenter.y,zPos);
 		
 	}
+	
+	public void setVisuals(){
+		
+		switch(this.cardType){
+			
+			case(CARD_TYPE.WIND):{
+				
+				this.cardBehavior.setText("Wind");
+				
+				break;
+				
+			}
+			case(CARD_TYPE.NULL):{
+				
+				this.cardBehavior.setText("Null");
+				
+				break;
+				
+			}
+			
+		}
+		
+	}
+	
 	
 	public void setCoordinates(CardManager manager,int index){
 		

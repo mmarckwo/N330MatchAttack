@@ -87,6 +87,7 @@ public class CardManager : MonoBehaviour{
 		for(int i = 0; i < numberOfCards; i++){
 			
 			cards[i].updateVisualPosition(this);
+			cards[i].setVisuals();
 			
 		}
 		

@@ -2,20 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using TMPro;
+
 public class CardBehavior : MonoBehaviour
 {
     // test data.
-    public string cardType = "fire";
     public int cardNumber = 0;
     public bool flipped = false;
 
     private Animation cardAnimation;
+	private TextMeshPro cardText;
 	
 	private string currentAnimation;
-
-    private void Start()
+    
+	//Awake gets called on instantiation, unlike Start, which gets called on the next frame.
+    private void Awake()
     {
         cardAnimation = GetComponent<Animation>();
+        cardText = transform.GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshPro>();
     }
 
     public void CardFlip()
@@ -26,13 +30,13 @@ public class CardBehavior : MonoBehaviour
 			// flip the card if it is unflipped. unflip it if it is flipped.
 			if (flipped){
 				
-				// card is flipped.
-				playAnim("CardFlipAnim");
+				// card is unflipped.
+				playAnim("CardUnflipAnim");   
 				
 			}else{
 				
-				// card is unflipped.
-				playAnim("CardUnflipAnim");   
+				// card is flipped.
+				playAnim("CardFlipAnim");
 				
 			}
 			
@@ -44,8 +48,16 @@ public class CardBehavior : MonoBehaviour
 
     void playAnim(string anim)
     {
-        cardAnimation.Play(anim);
+        
+		cardAnimation.Play(anim);
 		currentAnimation = anim;
 		
     }
+	
+	public void setText(string text){
+		
+		cardText.SetText(text);
+		
+	}
+	
 }
