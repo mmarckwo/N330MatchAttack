@@ -10,6 +10,8 @@ public class CardBehavior : MonoBehaviour
     public int cardNumber = 0;
     public bool flipped = false;
 
+	private string cardType;
+
     private Animation cardAnimation;
 	private TextMeshPro cardText;
 	
@@ -41,6 +43,9 @@ public class CardBehavior : MonoBehaviour
 			}
 			
 			flipped = !flipped;
+
+			// log the card type for testing.
+			Debug.Log(cardType);
 			
 		}
         
@@ -57,6 +62,8 @@ public class CardBehavior : MonoBehaviour
 	public void setText(string text){
 		
 		cardText.SetText(text);
+		// set the card type.
+		cardType = text;
 		
 	}
 	
