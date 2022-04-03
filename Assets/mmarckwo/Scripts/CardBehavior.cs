@@ -15,7 +15,7 @@ public class CardBehavior : MonoBehaviour
     private Animation cardAnimation;
 	private TextMeshPro cardText;
 	
-	private string currentAnimation;
+	private string currentAnimation = ""; //the name of the animation currently being played, or an empty string should there be no currently playing animation.
     
 	//Awake gets called on instantiation, unlike Start, which gets called on the next frame.
     private void Awake()
@@ -27,7 +27,8 @@ public class CardBehavior : MonoBehaviour
     public void CardFlip()
     {
 		
-		if(!cardAnimation.IsPlaying(currentAnimation)){
+		//check if we've stopped animating.
+		if(currentAnimation == ""){
 			
 			// flip the card if it is unflipped. unflip it if it is flipped.
 			if (flipped){
@@ -47,10 +48,33 @@ public class CardBehavior : MonoBehaviour
 		}
         
     }
+	
+	public void Update(){
+		
+		//check if we've stopped animating.
+		if(currentAnimation != "" && !cardAnimation.IsPlaying(currentAnimation)){
+			
+			//set animation to empty
+			currentAnimation = "";
+			
+			if(flipped){
+				
+				Debug.Log("Flipped animation completed!");
+				
+			}else{
+				
+				Debug.Log("Unflipped animation completed!");
+				
+			}
+			
+		}
+		
+	}
 
     void playAnim(string anim)
     {
         
+		//play animation, set currentAnimation
 		cardAnimation.Play(anim);
 		currentAnimation = anim;
 		
