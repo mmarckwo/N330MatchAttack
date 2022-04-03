@@ -12,6 +12,8 @@ public class CardBehavior : MonoBehaviour
 
 	public string cardType;
 
+	private GameManager gameManager;
+
     private Animation cardAnimation;
 	private TextMeshPro cardText;
 	
@@ -22,6 +24,10 @@ public class CardBehavior : MonoBehaviour
     {
         cardAnimation = GetComponent<Animation>();
         cardText = transform.GetChild(0).GetChild(0).gameObject.GetComponent<TextMeshPro>();
+
+		// get game manager reference as card is instantiated.
+		GameObject gameManagerObject = GameObject.Find("Game Manager");
+		gameManager = gameManagerObject.GetComponent<GameManager>();
     }
 
     public void CardFlip()
@@ -60,6 +66,7 @@ public class CardBehavior : MonoBehaviour
 			if(flipped){
 				
 				Debug.Log("Flipped animation completed!");
+				gameManager.CardChecker(cardType);
 				
 			}else{
 				
