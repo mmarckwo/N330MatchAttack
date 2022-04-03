@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerClick : MonoBehaviour
 {
+    // get gamemanager script from gamemanager object.
+    public GameManager gameManger;
+
+    private string cardTypeRef;
     private void Update()
     {
         if(Input.GetButtonDown("Fire1"))
@@ -15,6 +19,13 @@ public class PlayerClick : MonoBehaviour
                 if(hit.transform.tag == "Card")
                 {
                     hit.collider.gameObject.GetComponent<CardBehavior>().CardFlip();
+
+                    // if the card isn't flipped, get the card type and send it to the game manager.
+                    if(hit.collider.gameObject.GetComponent<CardBehavior>().flipped)
+                    {
+                        cardTypeRef = hit.collider.gameObject.GetComponent<CardBehavior>().cardType;
+                        gameManger.CardChecker(cardTypeRef);
+                    }
                 }
             }
         }
