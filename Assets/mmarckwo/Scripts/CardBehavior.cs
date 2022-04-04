@@ -6,11 +6,10 @@ using TMPro;
 
 public class CardBehavior : MonoBehaviour
 {
-    // test data.
-    public int cardNumber = 0;
+	
     public bool flipped = false;
 
-	public string cardType;
+	public CardState cardState;
 
 	private GameManager gameManager;
 
@@ -28,10 +27,13 @@ public class CardBehavior : MonoBehaviour
 		// get game manager reference as card is instantiated.
 		GameObject gameManagerObject = GameObject.Find("Game Manager");
 		gameManager = gameManagerObject.GetComponent<GameManager>();
+		
     }
 
     public void CardFlip()
     {
+		
+		//todo: refactor flipping!
 		
 		//check if we've stopped animating.
 		if(currentAnimation == ""){
@@ -40,12 +42,12 @@ public class CardBehavior : MonoBehaviour
 			if (flipped){
 				
 				// card is unflipped.
-				playAnim("CardUnflipAnim");   
+				PlayAnim("CardUnflipAnim");   
 				
 			}else{
 				
 				// card is flipped.
-				playAnim("CardFlipAnim");
+				PlayAnim("CardFlipAnim");
 				
 			}
 			
@@ -65,12 +67,12 @@ public class CardBehavior : MonoBehaviour
 			
 			if(flipped){
 				
-				Debug.Log("Flipped animation completed!");
-				gameManager.CardChecker(cardType);
+				//Debug.Log("Flipped animation completed!");
+				gameManager.AddFlippedCard(this.cardState);
 				
 			}else{
 				
-				Debug.Log("Unflipped animation completed!");
+				//Debug.Log("Unflipped animation completed!");
 				
 			}
 			
@@ -78,7 +80,7 @@ public class CardBehavior : MonoBehaviour
 		
 	}
 
-    void playAnim(string anim)
+    public void PlayAnim(string anim)
     {
         
 		//play animation, set currentAnimation
@@ -90,9 +92,8 @@ public class CardBehavior : MonoBehaviour
 	
 	public void setText(string text){
 		
+		//set the card text
 		cardText.SetText(text);
-		// set the card type.
-		cardType = text;
 		
 	}
 	

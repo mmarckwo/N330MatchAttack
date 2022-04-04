@@ -37,7 +37,7 @@ public class CardManager : MonoBehaviour{
 		
 	};
 	
-	void initializeCards(){
+	public void initializeCards(){
 		
 		//create CardState with corresponding GameObjects.
 		
@@ -58,7 +58,7 @@ public class CardManager : MonoBehaviour{
 		
 	}
 	
-	void shuffleCards(){
+	public void shuffleCards(){
 		
 		//use Fischer-Yates shuffle algorithm.
 		
@@ -78,7 +78,7 @@ public class CardManager : MonoBehaviour{
 		
 	}
 	
-	void updateAllVisuals(){
+	public void updateAllVisuals(){
 		
 		//update visual poisition of cards.
 		

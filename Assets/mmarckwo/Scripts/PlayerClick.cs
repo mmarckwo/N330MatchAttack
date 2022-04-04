@@ -17,10 +17,10 @@ public class PlayerClick : MonoBehaviour
                     hit.collider.gameObject.GetComponent<CardBehavior>().CardFlip();
 
                     // runs if the card isn't flipped. logic might be useful?
-                    if(hit.collider.gameObject.GetComponent<CardBehavior>().flipped)
+                    /*if(hit.collider.gameObject.GetComponent<CardBehavior>().flipped)
                     {
                         // do something with this?
-                    }
+                    }*/
                 }
             }
         }

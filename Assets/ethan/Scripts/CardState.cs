@@ -31,6 +31,8 @@ public class CardState{
 	public bool chainedRight = false;
 	public bool chainedDown = false;
 	
+	public bool matched = false;
+	
 	//the game object that contains the models/textures/etc for the card object.
 	public GameObject cardObject;
 	public CardBehavior cardBehavior;
@@ -44,6 +46,7 @@ public class CardState{
 		//set our game object.
 		this.cardObject = _cardObject;
 		this.cardBehavior = this.cardObject.transform.GetChild(0).gameObject.GetComponent<CardBehavior>();
+		this.cardBehavior.cardState = this;
 		
 	}
 	
@@ -51,15 +54,24 @@ public class CardState{
 		
 		//set visual position of card
 		
-		Vector3 cardCenter = manager.cardCenter.position;
-		
-		float xPosStart = cardCenter.x-((float)(manager.cardRows-1))*0.5f*manager.cardOffsetWidth;
-		float zPosStart = cardCenter.z-((float)(manager.cardColumns-1))*0.5f*manager.cardOffsetHeight;
-		
-		float xPos = xPosStart + manager.cardOffsetWidth*this.x;
-		float zPos = zPosStart + manager.cardOffsetHeight*this.z;
-		
-		this.cardObject.transform.position = new Vector3(xPos,cardCenter.y,zPos);
+		if(this.matched){
+			
+			//todo: properly destroy object!
+			this.cardObject.transform.position = new Vector3(1000.0f,1000.0f,1000.0f);
+			
+		}else{
+			
+			Vector3 cardCenter = manager.cardCenter.position;
+			
+			float xPosStart = cardCenter.x-((float)(manager.cardRows-1))*0.5f*manager.cardOffsetWidth;
+			float zPosStart = cardCenter.z-((float)(manager.cardColumns-1))*0.5f*manager.cardOffsetHeight;
+			
+			float xPos = xPosStart + manager.cardOffsetWidth*this.x;
+			float zPos = zPosStart + manager.cardOffsetHeight*this.z;
+			
+			this.cardObject.transform.position = new Vector3(xPos,cardCenter.y,zPos);
+			
+		}
 		
 	}
 	
@@ -86,13 +98,18 @@ public class CardState{
 		
 	}
 	
-	
 	public void setCoordinates(CardManager manager,int index){
 		
 		//from an index, set x and z coordinates
 		
 		this.x = index % manager.cardRows;
 		this.z = index / manager.cardRows;
+		
+	}
+	
+	public bool IsMatch(CardState other){
+		
+		return(other.cardType == this.cardType);
 		
 	}
 	
