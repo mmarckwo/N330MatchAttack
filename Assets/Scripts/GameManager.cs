@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 	public ParticleSystem windP;
 	public CardState[] flippedCards = {null,null};
 	int numberOfFlippedCards = 0;
+	int bulletCount = 1;
 
 	//todo: we should have a discussion about this.
 	public CardManager cardManager;
@@ -138,6 +139,15 @@ public class GameManager : MonoBehaviour
 
 		}
 
+    }
+
+	public void ShootCard(GameObject card)
+    {
+		if(bulletCount >= 1)
+        {
+			Destroy(card);
+			bulletCount -= 1;
+        }
     }
 
 }

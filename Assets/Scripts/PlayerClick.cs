@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerClick : MonoBehaviour
 {
+    public GameManager gameManager;
+
     private void Update()
     {
         if(Input.GetButtonDown("Fire1"))
@@ -21,6 +23,19 @@ public class PlayerClick : MonoBehaviour
                     {
                         // do something with this?
                     }*/
+                }
+            }
+        }
+
+        if (Input.GetButtonDown("Fire2"))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 100))
+            {
+                if (hit.transform.tag == "Card")
+                {
+                    gameManager.ShootCard(hit.collider.gameObject);
                 }
             }
         }
