@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-  public ParticleSystem ps1;
+	public ParticleSystem windP;
 	public CardState[] flippedCards = {null,null};
 	int numberOfFlippedCards = 0;
 
@@ -53,6 +53,8 @@ public class GameManager : MonoBehaviour
 
 				//wind: shuffle cards
 				cardManager.shuffleCards();
+				windP.Play();
+				Debug.Log(windP.isPlaying);
 				break;
 
 			}
@@ -112,7 +114,6 @@ public class GameManager : MonoBehaviour
 				if(flippedCards[i].IsMatch(flippedCards[j])){
 
 					matched = true;
-          //ps1.play();
 
 					flippedCards[i].matched = true;
 					flippedCards[j].matched = true;
