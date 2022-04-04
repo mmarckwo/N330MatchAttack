@@ -11,6 +11,7 @@ public class CardState{
 		
 		WIND,
 		NULL,
+		WILD,
 		
 	};
 	
@@ -93,6 +94,13 @@ public class CardState{
 				break;
 				
 			}
+			case(CARD_TYPE.WILD):{
+				
+				this.cardBehavior.setText("Wild");
+				
+				break;
+				
+			}
 			
 		}
 		
@@ -109,7 +117,11 @@ public class CardState{
 	
 	public bool IsMatch(CardState other){
 		
-		return(other.cardType == this.cardType);
+		if(other.cardType == this.cardType) return(true);
+		if(other.cardType == CARD_TYPE.WILD) return(true);
+		if(this.cardType == CARD_TYPE.WILD) return(true);
+		
+		return(false);
 		
 	}
 	
