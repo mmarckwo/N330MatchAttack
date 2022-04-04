@@ -648,7 +648,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5451601994468095309, guid: c11b844f8a0c38d4597b2bb096ab03a2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.13
+      value: -0.36
       objectReference: {fileID: 0}
     - target: {fileID: 5451601994468095309, guid: c11b844f8a0c38d4597b2bb096ab03a2, type: 3}
       propertyPath: m_LocalPosition.y
@@ -656,7 +656,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5451601994468095309, guid: c11b844f8a0c38d4597b2bb096ab03a2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.49
+      value: -3.09
       objectReference: {fileID: 0}
     - target: {fileID: 5451601994468095309, guid: c11b844f8a0c38d4597b2bb096ab03a2, type: 3}
       propertyPath: m_LocalRotation.w
@@ -701,6 +701,10 @@ PrefabInstance:
     - target: {fileID: 5451601994468095310, guid: c11b844f8a0c38d4597b2bb096ab03a2, type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5451601994468095311, guid: c11b844f8a0c38d4597b2bb096ab03a2, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c11b844f8a0c38d4597b2bb096ab03a2, type: 3}
