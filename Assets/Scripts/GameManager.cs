@@ -146,6 +146,8 @@ public class GameManager : MonoBehaviour
 			UnflipAllCards();
 
 		}
+		
+		//check if all cards are cleared here
 
     }
 
