@@ -43,9 +43,10 @@ public class GameManager : MonoBehaviour
 
 		switch(cardState.cardType){
 
-			case(CardState.CARD_TYPE.NULL):{
+			case(CardState.CARD_TYPE.NULL):
+			case(CardState.CARD_TYPE.WILD):{
 
-				//null: do nothing
+				//null and wild: do nothing
 				break;
 
 			}
@@ -55,6 +56,13 @@ public class GameManager : MonoBehaviour
 				cardManager.shuffleCards();
 				windP.Play();
 				Debug.Log(windP.isPlaying);
+				break;
+
+			}
+			case(CardState.CARD_TYPE.LIGHTNING):{
+
+				//lightning: remove a random match.
+				cardManager.RemoveRandomMatch();
 				break;
 
 			}

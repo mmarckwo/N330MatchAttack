@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using static System.Tuple;
 using UnityEngine;
 
 public class CardManager : MonoBehaviour{
@@ -70,6 +71,34 @@ public class CardManager : MonoBehaviour{
 			cards[i].setVisuals();
 			
 		}
+		
+	}
+	
+	public void RemoveRandomMatch(){
+		
+		List<System.Tuple<int,int>> pairs = new List<System.Tuple<int,int>>();
+		
+		for(int i = 0; i < cards.Length; i++){
+			
+			for(int j = i+1; j < cards.Length; j++){
+				
+				if(cards[i].IsMatch(cards[j])){
+					
+					System.Tuple<int,int> newPair = new System.Tuple<int,int>(i,j);
+					
+					pairs.Add(newPair);
+					
+				}
+				
+			}
+			
+		}
+		
+		int matchIndex = Random.Range(0,pairs.Count-1);
+		
+		System.Tuple<int,int> chosenPair = pairs[matchIndex];
+		cards[chosenPair.Item1].matched = true;
+		cards[chosenPair.Item2].matched = true;
 		
 	}
 	

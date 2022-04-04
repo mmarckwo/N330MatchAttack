@@ -12,6 +12,7 @@ public class CardState{
 		WIND,
 		NULL,
 		WILD,
+		LIGHTNING,
 		
 	};
 	
@@ -97,6 +98,13 @@ public class CardState{
 			case(CARD_TYPE.WILD):{
 				
 				this.cardBehavior.setText("Wild");
+				
+				break;
+				
+			}
+			case(CARD_TYPE.LIGHTNING):{
+				
+				this.cardBehavior.setText("Lightning");
 				
 				break;
 				
