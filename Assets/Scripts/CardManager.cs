@@ -15,27 +15,7 @@ public class CardManager : MonoBehaviour{
 	public GameObject cardObject;
 	public Transform cardCenter;
 	
-	public CardState.CARD_TYPE[] startingTypes = {
-		
-		CardState.CARD_TYPE.NULL,
-		CardState.CARD_TYPE.NULL,
-		CardState.CARD_TYPE.NULL,
-		CardState.CARD_TYPE.NULL,
-		CardState.CARD_TYPE.NULL,
-		CardState.CARD_TYPE.NULL,
-		CardState.CARD_TYPE.NULL,
-		CardState.CARD_TYPE.NULL,
-		
-		CardState.CARD_TYPE.WIND,
-		CardState.CARD_TYPE.WIND,
-		CardState.CARD_TYPE.WIND,
-		CardState.CARD_TYPE.WIND,
-		CardState.CARD_TYPE.WIND,
-		CardState.CARD_TYPE.WIND,
-		CardState.CARD_TYPE.WIND,
-		CardState.CARD_TYPE.WIND,
-		
-	};
+	public CardState.CARD_TYPE[] startingTypes;
 	
 	public void initializeCards(){
 		
