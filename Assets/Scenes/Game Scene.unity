@@ -5075,7 +5075,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 490443547}
   m_LocalRotation: {x: -0.70372176, y: -0, z: -0, w: 0.71047574}
-  m_LocalPosition: {x: 0.76, y: 5.1, z: 0.1}
+  m_LocalPosition: {x: 0.76, y: 1000, z: 0.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5265,7 +5265,7 @@ Transform:
   m_GameObject: {fileID: 1256181989}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -5313,6 +5313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d99562ed8c6ab184dbaee030965e8332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ps1: {fileID: 0}
   cardManager: {fileID: 5434050486993976238}
 --- !u!1 &1824273868
 GameObject:
