@@ -34,6 +34,7 @@ public class CardState{
 	public bool chainedDown = false;
 	
 	public bool matched = false;
+	public int discardIndex = -1; //where it is in the discard pile, or -1
 	
 	//the game object that contains the models/textures/etc for the card object.
 	public GameObject cardObject;
@@ -52,18 +53,39 @@ public class CardState{
 		
 	}
 	
+	public void setPositionInGrid(Vector3 center, int numRows, int numColumns, float width, float height, int _x, int _z){
+		
+		float xPosStart = center.x-((float)(numColumns-1))*0.5f*width;
+		float zPosStart = center.z-((float)(numRows-1))*0.5f*height;
+		
+		float xPos = xPosStart + width*_x;
+		float zPos = zPosStart + height*_z;
+		
+		this.cardObject.transform.position = new Vector3(xPos,center.y,zPos);
+		
+	}
+	
 	public void updateVisualPosition(CardManager manager){
 		
 		//set visual position of card
 		
 		if(this.matched){
 			
-			//todo: properly destroy object!
-			this.cardObject.transform.position = new Vector3(1000.0f,1000.0f,1000.0f);
+			int discardX = this.discardIndex % manager.discardColumns;
+			int discardY = this.discardIndex / manager.discardColumns;
+			
+			Debug.Log(discardX);
+			Debug.Log(discardY);
+			
+			setPositionInGrid(manager.discardCenter.position,manager.discardRows,manager.discardColumns,manager.discardOffsetWidth,manager.discardOffsetHeight,discardX,discardY); 
+			
+			this.cardObject.transform.eulerAngles = new Vector3(0.0f,0.0f,0.0f);
+			this.cardObject.transform.GetChild(0).eulerAngles = new Vector3(0.0f,0.0f,180.0f);
+			
 			
 		}else{
 			
-			Vector3 cardCenter = manager.cardCenter.position;
+			/*Vector3 cardCenter = manager.cardCenter.position;
 			
 			float xPosStart = cardCenter.x-((float)(manager.cardRows-1))*0.5f*manager.cardOffsetWidth;
 			float zPosStart = cardCenter.z-((float)(manager.cardColumns-1))*0.5f*manager.cardOffsetHeight;
@@ -71,7 +93,9 @@ public class CardState{
 			float xPos = xPosStart + manager.cardOffsetWidth*this.x;
 			float zPos = zPosStart + manager.cardOffsetHeight*this.z;
 			
-			this.cardObject.transform.position = new Vector3(xPos,cardCenter.y,zPos);
+			this.cardObject.transform.position = new Vector3(xPos,cardCenter.y,zPos);*/
+			
+			setPositionInGrid(manager.cardCenter.position,manager.cardRows,manager.cardColumns,manager.cardOffsetWidth,manager.cardOffsetHeight,this.x,this.z); 
 			
 		}
 		

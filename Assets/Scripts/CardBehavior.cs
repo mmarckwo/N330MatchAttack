@@ -33,6 +33,8 @@ public class CardBehavior : MonoBehaviour
     public void CardFlip()
     {
 		
+		if(this.cardState.matched) return;
+		
 		//todo: refactor flipping!
 		
 		//check if we've stopped animating.
@@ -100,7 +102,6 @@ public class CardBehavior : MonoBehaviour
 	public void Remove(){
 		
 		this.cardState.matched = true;
-		Destroy(this.gameObject);
 		
 	}
 	

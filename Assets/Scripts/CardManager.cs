@@ -7,14 +7,25 @@ public class CardManager : MonoBehaviour{
 	
 	public CardState[] cards;
 	
-	public int cardRows = 4;
-	public int cardColumns = 4;
-	
-	public float cardOffsetWidth = 1.0f;
-	public float cardOffsetHeight = 1.5f;
-	
 	public GameObject cardObject;
+	
 	public Transform cardCenter;
+	
+	public int cardRows;
+	public int cardColumns;
+	
+	public float cardOffsetWidth;
+	public float cardOffsetHeight;
+	
+	public Transform discardCenter;
+	
+	public int discardRows;
+	public int discardColumns;
+	
+	public float discardOffsetWidth;
+	public float discardOffsetHeight;
+	
+	public int nextDiscardIndex; //where in the discard pile should the next marched/discarded card go?
 	
 	public CardState.CARD_TYPE[] startingTypes;
 	
@@ -108,6 +119,27 @@ public class CardManager : MonoBehaviour{
 		
 	}
 	
+	public void FinalizeTurn(){
+		
+		for(int i = 0; i < cards.Length; i++){
+			
+			if(cards[i].matched && cards[i].discardIndex == -1){
+				
+				cards[i].discardIndex = this.nextDiscardIndex;
+				this.nextDiscardIndex++;
+				
+			}
+			
+		}
+		
+		
+		//check if all cards are cleared here
+		
+		//then update visuals
+		
+		updateAllVisuals();
+	}
+	
 	/*public void CountActiveCards(){
 		
 		int count = 0;
@@ -124,6 +156,7 @@ public class CardManager : MonoBehaviour{
 	
 	void Start(){
 		
+		this.nextDiscardIndex = 0;
 		initializeCards();
 		shuffleCards();
 		updateAllVisuals();

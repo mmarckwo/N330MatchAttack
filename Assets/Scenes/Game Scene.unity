@@ -311,13 +311,43 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &490443549 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 5451601994468095310, guid: c11b844f8a0c38d4597b2bb096ab03a2, type: 3}
   m_PrefabInstance: {fileID: 5451601994385942099}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &743201502
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 743201503}
+  m_Layer: 0
+  m_Name: DiscardCenter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &743201503
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 743201502}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 10, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1107529014
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,7 +626,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5855706068622293506, guid: af30c0460e429084699ad1b9eff4b794, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5855706068622293506, guid: af30c0460e429084699ad1b9eff4b794, type: 3}
       propertyPath: m_LocalPosition.x
@@ -718,12 +748,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c11c8475707eddb40aac1661c98fc8fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardObject: {fileID: 7293524915480512949, guid: 8e415b85b4e8bd0448be4db16bdea645, type: 3}
+  cardCenter: {fileID: 2092366234}
   cardRows: 4
   cardColumns: 4
   cardOffsetWidth: 3
   cardOffsetHeight: 4
-  cardObject: {fileID: 7293524915480512949, guid: 8e415b85b4e8bd0448be4db16bdea645, type: 3}
-  cardCenter: {fileID: 2092366234}
+  discardCenter: {fileID: 743201503}
+  discardRows: 8
+  discardColumns: 2
+  discardOffsetWidth: 2.5
+  discardOffsetHeight: 1
+  nextDiscardIndex: 0
   startingTypes: 01000000010000000300000003000000030000000300000002000000020000000200000002000000000000000000000000000000000000000000000000000000
 --- !u!1001 &5451601994385942099
 PrefabInstance:
@@ -738,7 +774,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5451601994468095309, guid: c11b844f8a0c38d4597b2bb096ab03a2, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5451601994468095309, guid: c11b844f8a0c38d4597b2bb096ab03a2, type: 3}
       propertyPath: m_LocalPosition.x

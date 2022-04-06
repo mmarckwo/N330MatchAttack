@@ -134,9 +134,7 @@ public class GameManager : MonoBehaviour
 		}
 
 		DoAllMatchEffects();
-
-		cardManager.updateAllVisuals();
-
+		
 		if(matched){
 
 			UnflipAllCards();
@@ -147,7 +145,7 @@ public class GameManager : MonoBehaviour
 
 		}
 		
-		//check if all cards are cleared here
+		cardManager.FinalizeTurn();
 
     }
 
@@ -160,6 +158,9 @@ public class GameManager : MonoBehaviour
         {
 			card.GetComponent<CardBehavior>().Remove();
 			bulletCount -= 1;
+			
+			cardManager.FinalizeTurn();
+			
         }
 		
     }
