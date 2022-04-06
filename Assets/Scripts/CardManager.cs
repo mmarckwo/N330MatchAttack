@@ -80,9 +80,11 @@ public class CardManager : MonoBehaviour{
 		
 		for(int i = 0; i < cards.Length; i++){
 			
+			if(cards[i].matched) continue;
+			
 			for(int j = i+1; j < cards.Length; j++){
 				
-				if(cards[i].IsMatch(cards[j])){
+				if(!cards[j].matched && cards[j].IsMatch(cards[i])){
 					
 					System.Tuple<int,int> newPair = new System.Tuple<int,int>(i,j);
 					
@@ -94,13 +96,31 @@ public class CardManager : MonoBehaviour{
 			
 		}
 		
-		int matchIndex = Random.Range(0,pairs.Count-1);
-		
-		System.Tuple<int,int> chosenPair = pairs[matchIndex];
-		cards[chosenPair.Item1].matched = true;
-		cards[chosenPair.Item2].matched = true;
+		if(pairs.Count > 0){
+			
+			int matchIndex = Random.Range(0,pairs.Count-1);
+			
+			System.Tuple<int,int> chosenPair = pairs[matchIndex];
+			cards[chosenPair.Item1].matched = true;
+			cards[chosenPair.Item2].matched = true;
+			
+		}
 		
 	}
+	
+	/*public void CountActiveCards(){
+		
+		int count = 0;
+		
+		for(int i = 0; i < cards.Length; i++){
+			
+			if(cards[i] != null && !cards[i].matched) count++;
+			
+		}
+		
+		Debug.Log(count);
+		
+	}*/
 	
 	void Start(){
 		

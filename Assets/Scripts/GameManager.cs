@@ -153,11 +153,15 @@ public class GameManager : MonoBehaviour
 
 	public void ShootCard(GameObject card)
     {
+		//called when the user attempts to shoot a card.
+		//removes a card if there's enough bullets.
+		
 		if(bulletCount >= 1)
         {
-			Destroy(card);
+			card.GetComponent<CardBehavior>().Remove();
 			bulletCount -= 1;
         }
+		
     }
 
 }

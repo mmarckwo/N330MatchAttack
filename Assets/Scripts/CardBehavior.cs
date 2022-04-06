@@ -97,4 +97,11 @@ public class CardBehavior : MonoBehaviour
 		
 	}
 	
+	public void Remove(){
+		
+		this.cardState.matched = true;
+		Destroy(this.gameObject);
+		
+	}
+	
 }
