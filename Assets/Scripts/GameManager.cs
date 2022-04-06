@@ -4,10 +4,39 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+	
+	public enum TURN_STATE{
+		
+		TURN_BEGIN,
+		
+		FLIP_ONE,
+		FLIP_TWO,
+		
+		WAIT_ON_UNFLIP,
+		
+	};
+	
+	public enum ANIMATION_STATE{
+		
+		NOT_ANIMATING,
+		
+		FLIP_ONE,
+		FLIP_TWO,
+		
+		UNFLIP_CARDS,
+		
+	};
+	
+	public TURN_STATE turnState;
+	public ANIMATION_STATE animationState;
+	
 	public ParticleSystem windP;
+	
 	public CardState[] flippedCards = {null,null};
 	int numberOfFlippedCards = 0;
-	int bulletCount = 1;
+	
+	public int bulletCount = 1;
+	public int health = 30;
 
 	//todo: we should have a discussion about this.
 	public CardManager cardManager;
@@ -18,12 +47,13 @@ public class GameManager : MonoBehaviour
 		flippedCards[numberOfFlippedCards] = cardState;
 
 		numberOfFlippedCards++;
-
-        CheckMatch();
-
+		
     }
 
 	public void UnflipAllCards(){
+
+		this.animationState = ANIMATION_STATE.UNFLIP_CARDS;
+		this.turnState = TURN_STATE.WAIT_ON_UNFLIP;
 
 		for(int i = 0; i < numberOfFlippedCards; i++){
 
@@ -35,9 +65,9 @@ public class GameManager : MonoBehaviour
 			}
 
 		}
-
+		
 		numberOfFlippedCards = 0;
-
+		
 	}
 
 	void DoMatchEffect(CardState cardState){
@@ -143,11 +173,14 @@ public class GameManager : MonoBehaviour
 		DoAllMatchEffects();
 		
 		if(matched){
-
-			UnflipAllCards();
-
-		}else if(numberOfFlippedCards >= 2){
-
+			
+			this.turnState = TURN_STATE.TURN_BEGIN;
+			this.animationState = ANIMATION_STATE.NOT_ANIMATING;
+			this.numberOfFlippedCards = 0;
+			
+		}else{
+			
+			this.health--;
 			UnflipAllCards();
 
 		}
@@ -158,6 +191,9 @@ public class GameManager : MonoBehaviour
 
 	public void ShootCard(GameObject card)
     {
+		
+		if(this.turnState != TURN_STATE.TURN_BEGIN) return;
+		
 		//called when the user attempts to shoot a card.
 		//removes a card if there's enough bullets.
 		
@@ -171,5 +207,82 @@ public class GameManager : MonoBehaviour
         }
 		
     }
+	
+	public bool PlayerCanInput(){
+		
+		return(this.turnState == TURN_STATE.TURN_BEGIN || this.turnState == TURN_STATE.FLIP_ONE);
+		
+	}
+	
+	public void AdvanceStateOnFlip(){
+		
+		switch(this.turnState){
+			
+			case(TURN_STATE.TURN_BEGIN):{
+				
+				this.turnState = TURN_STATE.FLIP_ONE;
+				this.animationState = ANIMATION_STATE.FLIP_ONE;
+				
+				break;
+				
+			}
+			case(TURN_STATE.FLIP_ONE):{
+				
+				this.turnState = TURN_STATE.FLIP_TWO;
+				this.animationState = ANIMATION_STATE.FLIP_TWO;
+				
+				break;
+				
+			}
+			
+		}
+			
+	}
 
+	public void advanceStateOnAnimationComplete(){
+		
+		switch(this.animationState){
+			
+			case(ANIMATION_STATE.NOT_ANIMATING):{
+				
+				//this.turnState = TURN_STATE.FLIP_ONE;
+				Debug.Log("Warning: trying to complete a nonexistant animation???");
+				
+				break;
+				
+			}
+			case(ANIMATION_STATE.FLIP_ONE):{
+				
+				this.animationState = ANIMATION_STATE.NOT_ANIMATING;
+				
+				break;
+				
+			}
+			case(ANIMATION_STATE.FLIP_TWO):{
+				
+				CheckMatch();
+				
+				break;
+				
+			}
+			case(ANIMATION_STATE.UNFLIP_CARDS):{
+				
+				this.turnState = TURN_STATE.TURN_BEGIN;
+				this.animationState = ANIMATION_STATE.NOT_ANIMATING;
+				
+				break;
+				
+			}
+			
+		}
+			
+	}
+	
+	public void Start(){
+		
+		this.turnState = TURN_STATE.TURN_BEGIN;
+		this.animationState = ANIMATION_STATE.NOT_ANIMATING;
+		
+	}
+	
 }

@@ -581,6 +581,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   windP: {fileID: 490443549}
+  bulletCount: 1
+  health: 10
   cardManager: {fileID: 5434050486993976238}
 --- !u!1 &1824273868
 GameObject:
@@ -748,6 +750,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c11c8475707eddb40aac1661c98fc8fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 1333337766}
   cardObject: {fileID: 7293524915480512949, guid: 8e415b85b4e8bd0448be4db16bdea645, type: 3}
   cardCenter: {fileID: 2092366234}
   cardRows: 4

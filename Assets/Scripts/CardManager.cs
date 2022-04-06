@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class CardManager : MonoBehaviour{
 	
+	public GameManager gameManager;
+	
 	public CardState[] cards;
 	
 	public GameObject cardObject;
@@ -138,6 +140,17 @@ public class CardManager : MonoBehaviour{
 		//then update visuals
 		
 		updateAllVisuals();
+		
+		string uiString = "Health: ";
+		
+		uiString += this.gameManager.health;
+		
+		uiString += " Bullets: ";
+		
+		uiString += this.gameManager.bulletCount;
+		
+		Debug.Log(uiString);
+		
 	}
 	
 	/*public void CountActiveCards(){

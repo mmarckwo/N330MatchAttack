@@ -8,6 +8,8 @@ public class CardBehavior : MonoBehaviour
 {
 	
     public bool flipped = false;
+	
+	GameManager.ANIMATION_STATE animationState;
 
 	public CardState cardState;
 
@@ -40,20 +42,33 @@ public class CardBehavior : MonoBehaviour
 		//check if we've stopped animating.
 		if(currentAnimation == ""){
 			
-			// flip the card if it is unflipped. unflip it if it is flipped.
-			if (flipped){
+			if(flipped) return;
+			
+			if(gameManager.PlayerCanInput()){
 				
-				// card is unflipped.
-				PlayAnim("CardUnflipAnim");   
+				gameManager.AdvanceStateOnFlip();
 				
-			}else{
+				//gameManager.turnState = GameManager.TURN_STATE.FLIP_ONE;
+				//gameManager.animationState = GameManager.ANIMATION_STATE.FLIP_ONE;
 				
-				// card is flipped.
 				PlayAnim("CardFlipAnim");
+				flipped = true;
+				gameManager.AddFlippedCard(this.cardState);
+				
 				
 			}
 			
-			flipped = !flipped;
+			/*if(gameManager.turnState ==  GameManager.TURN_STATE.FLIP_ONE && gameManager.playerCanInput()){
+				
+				gameManager.turnState = GameManager.TURN_STATE.FLIP_TWO;
+				gameManager.animationState = GameManager.ANIMATION_STATE.FLIP_ONE;
+				
+				PlayAnim("CardFlipAnim");
+				flipped = true;
+				gameManager.AddFlippedCard(this.cardState);
+				
+				
+			}*/
 			
 		}
         
@@ -67,14 +82,9 @@ public class CardBehavior : MonoBehaviour
 			//set animation to empty
 			currentAnimation = "";
 			
-			if(flipped){
+			if(this.animationState == gameManager.animationState){
 				
-				//Debug.Log("Flipped animation completed!");
-				gameManager.AddFlippedCard(this.cardState);
-				
-			}else{
-				
-				//Debug.Log("Unflipped animation completed!");
+				gameManager.advanceStateOnAnimationComplete();
 				
 			}
 			
@@ -84,7 +94,9 @@ public class CardBehavior : MonoBehaviour
 
     public void PlayAnim(string anim)
     {
-        
+		
+		this.animationState = gameManager.animationState;
+		
 		//play animation, set currentAnimation
 		cardAnimation.Play(anim);
 		currentAnimation = anim;
