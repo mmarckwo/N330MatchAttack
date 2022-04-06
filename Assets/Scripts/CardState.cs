@@ -13,6 +13,7 @@ public class CardState{
 		NULL,
 		WILD,
 		LIGHTNING,
+		GUN,
 		
 	};
 	
@@ -74,9 +75,6 @@ public class CardState{
 			int discardX = this.discardIndex % manager.discardColumns;
 			int discardY = this.discardIndex / manager.discardColumns;
 			
-			Debug.Log(discardX);
-			Debug.Log(discardY);
-			
 			setPositionInGrid(manager.discardCenter.position,manager.discardRows,manager.discardColumns,manager.discardOffsetWidth,manager.discardOffsetHeight,discardX,discardY); 
 			
 			this.cardObject.transform.eulerAngles = new Vector3(0.0f,0.0f,0.0f);
@@ -129,6 +127,13 @@ public class CardState{
 			case(CARD_TYPE.LIGHTNING):{
 				
 				this.cardBehavior.setText("Lightning");
+				
+				break;
+				
+			}
+			case(CARD_TYPE.GUN):{
+				
+				this.cardBehavior.setText("Gun");
 				
 				break;
 				

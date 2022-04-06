@@ -67,6 +67,13 @@ public class GameManager : MonoBehaviour
 				break;
 
 			}
+			case(CardState.CARD_TYPE.GUN):{
+				
+				//gun: give the player a bullet.
+				bulletCount++;
+				break;
+				
+			}
 
 		};
 
