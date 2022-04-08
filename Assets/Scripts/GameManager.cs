@@ -432,6 +432,7 @@ public class GameManager : MonoBehaviour
 	
 	void UpdateBulletCount()
     {
-		bulletCountText.SetText(bulletCount.ToString());
+		string count = bulletCount.ToString();
+		bulletCountText.SetText(count);
     }
 }
