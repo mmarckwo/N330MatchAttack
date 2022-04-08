@@ -46,7 +46,7 @@ public class CardBehavior : MonoBehaviour
 			
 			if(flipped) return;
 			
-			if(gameManager.PlayerCanInput()){
+			if(gameManager.PlayerCanInput(this)){
 				
 				gameManager.AdvanceStateOnFlip();
 				

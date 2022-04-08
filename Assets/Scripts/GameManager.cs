@@ -72,6 +72,34 @@ public class GameManager : MonoBehaviour
 		
 	}
 
+	public CardState findUnmatchedCard(){
+		
+		List<int> unmatchedCards = new List<int>();
+		
+		//ink: ink a random card.
+		for(int i = 0; i < cardManager.cards.Length; i++){
+			
+			if(!cardManager.cards[i].matched){
+				
+				unmatchedCards.Add(i);
+				
+			}
+			
+		}
+		
+		if(unmatchedCards.Count > 0){
+			
+			 int index = Random.Range(0,unmatchedCards.Count-1);
+			 
+			 return(cardManager.cards[unmatchedCards[index]]);//.coating = CardState.COATING.INKED;
+			
+		}
+		
+		return(null);
+		
+	}
+				
+	
 	void DoMatchEffect(CardState cardState){
 
 		switch(cardState.cardType){
@@ -127,26 +155,18 @@ public class GameManager : MonoBehaviour
 			}
 			case(CardState.CARD_TYPE.INK):{
 				
-				List<int> unmatchedCards = new List<int>();
+				CardState card = findUnmatchedCard();
 				
-				//ink: ink a random card.
-				for(int i = 0; i < cardManager.cards.Length; i++){
-					
-					if(!cardManager.cards[i].matched){
-						
-						unmatchedCards.Add(i);
-						
-					}
-					
-				}
+				if(card != null) card.coating = CardState.COATING.INKED;
 				
-				if(unmatchedCards.Count > 0){
-					
-					 int index = Random.Range(0,unmatchedCards.Count-1);
-					 
-					 cardManager.cards[unmatchedCards[index]].coating = CardState.COATING.INKED;
-					
-				}
+				break;
+				
+			}
+			case(CardState.CARD_TYPE.FREEZE):{
+				
+				CardState card = findUnmatchedCard();
+				
+				if(card != null) card.coating = CardState.COATING.ICED;
 				
 				break;
 				
@@ -259,9 +279,13 @@ public class GameManager : MonoBehaviour
 		
     }
 	
-	public bool PlayerCanInput(){
+	public bool PlayerCanInput(CardBehavior card){
 		
-		return(this.turnState == TURN_STATE.TURN_BEGIN || this.turnState == TURN_STATE.FLIP_ONE);
+		if(!(this.turnState == TURN_STATE.TURN_BEGIN || this.turnState == TURN_STATE.FLIP_ONE)) return(false);
+		
+		if(card.cardState.coating == CardState.COATING.ICED) return(false);
+		
+		return(true);
 		
 	}
 	

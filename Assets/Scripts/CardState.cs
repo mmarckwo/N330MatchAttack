@@ -16,6 +16,7 @@ public class CardState{
 		GUN,
 		FIRE,
 		INK,
+		FREEZE,
 		
 	};
 	
@@ -154,6 +155,13 @@ public class CardState{
 			case(CARD_TYPE.INK):{
 				
 				this.cardBehavior.setText("Ink");
+				
+				break;
+				
+			}
+			case(CARD_TYPE.FREEZE):{
+				
+				this.cardBehavior.setText("Freeze");
 				
 				break;
 				
