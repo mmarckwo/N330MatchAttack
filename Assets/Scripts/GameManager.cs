@@ -48,10 +48,17 @@ public class GameManager : MonoBehaviour
 	public Image healthBarFill;
 	public Color goodHealth = new Color(69, 255, 137);
 	public Color lowHealth = new Color(255, 0, 85);
+	// higher lerp speed goes faster.
+	public float lerpSpeed = 5;
 
 
 	//todo: we should have a discussion about this.
 	public CardManager cardManager;
+
+    private void Update()
+    {
+		HPLerp();
+    }
 
     public void AddFlippedCard(CardState cardState)
     {
@@ -398,9 +405,13 @@ public class GameManager : MonoBehaviour
 		{
 			Debug.Log("You are dead.");
 		}
+	}
 
+	void HPLerp()
+    {
+		// goes in Update() to animate lerp.
 		// update health bar fill amount.
-		healthBarFill.fillAmount = health / maxHealth;
+		healthBarFill.fillAmount = Mathf.Lerp(healthBarFill.fillAmount, (health / maxHealth), Time.deltaTime * lerpSpeed);
 	}
 	
 	void UpdateBulletCount()
