@@ -87,7 +87,7 @@ public class CardManager : MonoBehaviour{
 		
 	}
 	
-	public void RemoveRandomMatch(){
+	public System.Tuple<int,int> FindRandomMatch(){
 		
 		List<System.Tuple<int,int>> pairs = new List<System.Tuple<int,int>>();
 		
@@ -114,6 +114,23 @@ public class CardManager : MonoBehaviour{
 			int matchIndex = Random.Range(0,pairs.Count-1);
 			
 			System.Tuple<int,int> chosenPair = pairs[matchIndex];
+			/*cards[chosenPair.Item1].matched = true;
+			cards[chosenPair.Item2].matched = true;*/
+			
+			return(chosenPair);
+			
+		}
+		
+		return(null);
+		
+	}
+	
+	public void RemoveRandomMatch(){
+		
+		System.Tuple<int,int> chosenPair = FindRandomMatch();
+		
+		if(chosenPair != null){
+			
 			cards[chosenPair.Item1].matched = true;
 			cards[chosenPair.Item2].matched = true;
 			

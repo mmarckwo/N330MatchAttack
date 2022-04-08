@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
 		
 		UNFLIP_CARDS,
 		
+		SHOW_PAIR,
+		
 	};
 	
 	public TURN_STATE turnState;
@@ -50,17 +52,17 @@ public class GameManager : MonoBehaviour
 		
     }
 
-	public void UnflipAllCards(){
+	public void UnflipUnmatchedCards(){
 
 		this.animationState = ANIMATION_STATE.UNFLIP_CARDS;
 		this.turnState = TURN_STATE.WAIT_ON_UNFLIP;
 
-		for(int i = 0; i < numberOfFlippedCards; i++){
+		for(int i = 0; i < cardManager.cards.Length; i++){
 
-			if(!flippedCards[i].matched){
+			if(!cardManager.cards[i].matched && cardManager.cards[i].cardBehavior.flipped){
 
-				flippedCards[i].cardBehavior.PlayAnim("CardUnflipAnim");
-				flippedCards[i].cardBehavior.flipped = false;
+				cardManager.cards[i].cardBehavior.PlayAnim("CardUnflipAnim");
+				cardManager.cards[i].cardBehavior.flipped = false;
 
 			}
 
@@ -101,6 +103,25 @@ public class GameManager : MonoBehaviour
 				
 				//gun: give the player a bullet.
 				bulletCount++;
+				break;
+				
+			}
+			case(CardState.CARD_TYPE.FIRE):{
+				
+				//fire: show a random match.
+				System.Tuple<int,int> match = cardManager.FindRandomMatch();
+				
+				if(match != null){
+					
+					this.animationState = ANIMATION_STATE.SHOW_PAIR;
+					
+					this.cardManager.cards[match.Item1].cardBehavior.PlayAnim("CardFlipAnim");
+					this.cardManager.cards[match.Item1].cardBehavior.flipped = true;
+					this.cardManager.cards[match.Item2].cardBehavior.PlayAnim("CardFlipAnim");
+					this.cardManager.cards[match.Item2].cardBehavior.flipped = true;
+					
+				}
+				
 				break;
 				
 			}
@@ -174,14 +195,18 @@ public class GameManager : MonoBehaviour
 		
 		if(matched){
 			
-			this.turnState = TURN_STATE.TURN_BEGIN;
-			this.animationState = ANIMATION_STATE.NOT_ANIMATING;
-			this.numberOfFlippedCards = 0;
+			if(this.animationState != ANIMATION_STATE.SHOW_PAIR){
+				
+				this.turnState = TURN_STATE.TURN_BEGIN;
+				this.animationState = ANIMATION_STATE.NOT_ANIMATING;
+				this.numberOfFlippedCards = 0;
+				
+			}
 			
 		}else{
 			
 			this.health--;
-			UnflipAllCards();
+			UnflipUnmatchedCards();
 
 		}
 		
@@ -270,6 +295,12 @@ public class GameManager : MonoBehaviour
 				this.turnState = TURN_STATE.TURN_BEGIN;
 				this.animationState = ANIMATION_STATE.NOT_ANIMATING;
 				
+				break;
+				
+			}
+			case(ANIMATION_STATE.SHOW_PAIR):{
+				
+				UnflipUnmatchedCards();
 				break;
 				
 			}

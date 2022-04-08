@@ -14,6 +14,7 @@ public class CardState{
 		WILD,
 		LIGHTNING,
 		GUN,
+		FIRE,
 		
 	};
 	
@@ -134,6 +135,13 @@ public class CardState{
 			case(CARD_TYPE.GUN):{
 				
 				this.cardBehavior.setText("Gun");
+				
+				break;
+				
+			}
+			case(CARD_TYPE.FIRE):{
+				
+				this.cardBehavior.setText("Fire");
 				
 				break;
 				
