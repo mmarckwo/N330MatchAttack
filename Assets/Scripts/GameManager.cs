@@ -141,6 +141,7 @@ public class GameManager : MonoBehaviour
 				
 				//gun: give the player a bullet.
 				bulletCount++;
+				UpdateBulletCount();
 				break;
 				
 			}
@@ -379,7 +380,7 @@ public class GameManager : MonoBehaviour
 		maxHealth = health;
 
 		// initialize bullet count.
-		UpdateBulletCount(bulletCount.ToString());
+		UpdateBulletCount();
 
 	}
 
@@ -402,8 +403,9 @@ public class GameManager : MonoBehaviour
 		healthBarFill.fillAmount = health / maxHealth;
 	}
 	
-	void UpdateBulletCount(string count)
+	void UpdateBulletCount()
     {
+		string count = bulletCount.ToString();
 		bulletCountText.SetText(count);
     }
 }
