@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
 	public CardState[] flippedCards = {null,null};
 	int numberOfFlippedCards = 0;
 	
+	// start with 1 bullet.
 	public int bulletCount = 1;
 	public float health = 10;
 	private float maxHealth;
