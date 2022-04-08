@@ -125,7 +125,33 @@ public class GameManager : MonoBehaviour
 				break;
 				
 			}
-
+			case(CardState.CARD_TYPE.INK):{
+				
+				List<int> unmatchedCards = new List<int>();
+				
+				//ink: ink a random card.
+				for(int i = 0; i < cardManager.cards.Length; i++){
+					
+					if(!cardManager.cards[i].matched){
+						
+						unmatchedCards.Add(i);
+						
+					}
+					
+				}
+				
+				if(unmatchedCards.Count > 0){
+					
+					 int index = Random.Range(0,unmatchedCards.Count-1);
+					 
+					 cardManager.cards[unmatchedCards[index]].coating = CardState.COATING.INKED;
+					
+				}
+				
+				break;
+				
+			}
+			
 		};
 
 	}

@@ -12,6 +12,8 @@ public class CardBehavior : MonoBehaviour
 	GameManager.ANIMATION_STATE animationState;
 
 	public CardState cardState;
+	
+	public GameObject inkHolder;
 
 	private GameManager gameManager;
 

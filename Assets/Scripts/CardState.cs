@@ -15,6 +15,7 @@ public class CardState{
 		LIGHTNING,
 		GUN,
 		FIRE,
+		INK,
 		
 	};
 	
@@ -68,6 +69,10 @@ public class CardState{
 	}
 	
 	public void updateVisualPosition(CardManager manager){
+		
+		//set ink stain
+		
+		this.cardBehavior.inkHolder.SetActive(this.coating == COATING.INKED);
 		
 		//set visual position of card
 		
@@ -142,6 +147,13 @@ public class CardState{
 			case(CARD_TYPE.FIRE):{
 				
 				this.cardBehavior.setText("Fire");
+				
+				break;
+				
+			}
+			case(CARD_TYPE.INK):{
+				
+				this.cardBehavior.setText("Ink");
 				
 				break;
 				
