@@ -19,6 +19,7 @@ public class CardBehavior : MonoBehaviour
 	public Material freezeMaterial;
 
 	private GameManager gameManager;
+	private AudioSource FlipSound;
 
     private Animation cardAnimation;
 	private TextMeshPro cardText;
@@ -36,7 +37,11 @@ public class CardBehavior : MonoBehaviour
 		// get game manager reference as card is instantiated.
 		GameObject gameManagerObject = GameObject.Find("Game Manager");
 		gameManager = gameManagerObject.GetComponent<GameManager>();
-		
+
+		// get card flip sound reference as card is instantiated.
+		GameObject cardFlipSoundObject = GameObject.Find("GameSounds/PlayerSounds/FlipSound");
+		FlipSound = cardFlipSoundObject.GetComponent<AudioSource>();
+
 		meshRenderer = GetComponent<MeshRenderer>();
 		
     }
@@ -56,10 +61,11 @@ public class CardBehavior : MonoBehaviour
 			if(gameManager.PlayerCanInput(this)){
 				
 				gameManager.AdvanceStateOnFlip();
-				
+
 				//gameManager.turnState = GameManager.TURN_STATE.FLIP_ONE;
 				//gameManager.animationState = GameManager.ANIMATION_STATE.FLIP_ONE;
-				
+
+				FlipSound.Play();
 				PlayAnim("CardFlipAnim");
 				flipped = true;
 				gameManager.AddFlippedCard(this.cardState);

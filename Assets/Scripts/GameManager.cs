@@ -52,7 +52,19 @@ public class GameManager : MonoBehaviour
 	// higher lerp speed goes faster.
 	public float lerpSpeed = 5;
 
+	[Header("Sounds")]
+	public AudioSource FlameSound;
+	public AudioSource FreezeSound;
+	public AudioSource WindSound;
+	public AudioSource InkSound;
+	public AudioSource NullSound;
+	public AudioSource ThunderSound;
+	public AudioSource ReloadSound;
+	public AudioSource ShootSound;
+	public AudioSource HurtSound;
+	public AudioSource FlipSound;
 
+	[Header("Card Manager")]
 	//todo: we should have a discussion about this.
 	public CardManager cardManager;
 
@@ -72,6 +84,7 @@ public class GameManager : MonoBehaviour
 
 	public void UnflipUnmatchedCards(){
 
+		FlipSound.Play();
 		this.animationState = ANIMATION_STATE.UNFLIP_CARDS;
 		this.turnState = TURN_STATE.WAIT_ON_UNFLIP;
 
@@ -126,12 +139,14 @@ public class GameManager : MonoBehaviour
 			case(CardState.CARD_TYPE.WILD):{
 
 				//null and wild: do nothing
+				NullSound.Play();
 				break;
 
 			}
 			case(CardState.CARD_TYPE.WIND):{
 
 				//wind: shuffle cards
+				WindSound.Play();
 				cardManager.shuffleCards();
 				windP.Play();
 				Debug.Log(windP.isPlaying);
@@ -141,6 +156,7 @@ public class GameManager : MonoBehaviour
 			case(CardState.CARD_TYPE.LIGHTNING):{
 
 				//lightning: remove a random match.
+				ThunderSound.Play();
 				cardManager.RemoveRandomMatch();
 				break;
 
@@ -148,6 +164,7 @@ public class GameManager : MonoBehaviour
 			case(CardState.CARD_TYPE.GUN):{
 				
 				//gun: give the player a bullet.
+				ReloadSound.Play();
 				bulletCount++;
 				UpdateBulletCount();
 				break;
@@ -156,6 +173,7 @@ public class GameManager : MonoBehaviour
 			case(CardState.CARD_TYPE.FIRE):{
 				
 				//fire: show a random match.
+				FlameSound.Play();
 				System.Tuple<int,int> match = cardManager.FindRandomMatch();
 				
 				if(match != null){
@@ -174,6 +192,7 @@ public class GameManager : MonoBehaviour
 			}
 			case(CardState.CARD_TYPE.INK):{
 				
+				InkSound.Play();
 				CardState card = findUnmatchedCard();
 				
 				if(card != null) card.coating = CardState.COATING.INKED;
@@ -183,6 +202,7 @@ public class GameManager : MonoBehaviour
 			}
 			case(CardState.CARD_TYPE.FREEZE):{
 				
+				FreezeSound.Play();
 				CardState card = findUnmatchedCard();
 				
 				if(card != null) card.coating = CardState.COATING.ICED;
@@ -314,6 +334,7 @@ public class GameManager : MonoBehaviour
 		
 		if(bulletCount >= 1)
         {
+			ShootSound.Play();
 			card.GetComponent<CardBehavior>().Remove();
 			bulletCount -= 1;
 			bulletCountText.SetText(bulletCount.ToString());
@@ -421,6 +442,8 @@ public class GameManager : MonoBehaviour
 
 	void TakeDamage()
     {
+
+		HurtSound.Play();
 		health--;
 
 		// make the health bar red when the player is at low HP.
