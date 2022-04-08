@@ -260,7 +260,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 818020c303fea7c41b873a2dbe3b2365, type: 2}
+  - {fileID: 2100000, guid: a4332abc435eeaf44a5a39fe8219c291, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -309,6 +309,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flipped: 0
   inkHolder: {fileID: 3298401797735099758}
+  defaultMaterial: {fileID: 2100000, guid: a4332abc435eeaf44a5a39fe8219c291, type: 2}
+  freezeMaterial: {fileID: 2100000, guid: 818020c303fea7c41b873a2dbe3b2365, type: 2}
+  meshRenderer: {fileID: 0}
 --- !u!111 &6022564898913595972
 Animation:
   m_ObjectHideFlags: 0

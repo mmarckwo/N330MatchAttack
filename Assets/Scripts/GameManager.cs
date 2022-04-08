@@ -197,7 +197,9 @@ public class GameManager : MonoBehaviour
 	void DoAllMatchEffects(){
 
 		//process match effects of cards
-
+		
+		bool removedIce = false;
+		
 		CardState[] cardQueue = new CardState[numberOfFlippedCards];
 		System.Array.Copy(flippedCards,cardQueue,numberOfFlippedCards);
 
@@ -206,7 +208,16 @@ public class GameManager : MonoBehaviour
 			if(cardQueue[i] == null) continue;
 
 			if(cardQueue[i].matched){
-
+				
+				
+				if(!removedIce){
+					
+					//remove ice before we process the first effect.
+					RemoveIce();
+					removedIce = true;
+					
+				}
+				
 				//we only process each effect once, regardless of how many cards we flipped.
 				//so remove all the cardStates from further down the queue that have the same type as the one that was just matched.
 
@@ -228,6 +239,20 @@ public class GameManager : MonoBehaviour
 
 		}
 
+	}
+	
+	void RemoveIce(){
+		
+		for(int i = 0; i < cardManager.cards.Length; i++){
+			
+			if(cardManager.cards[i].coating == CardState.COATING.ICED){
+				
+				cardManager.cards[i].coating = CardState.COATING.NONE;
+				
+			}
+			
+		}
+		
 	}
 
     void CheckMatch()
@@ -293,6 +318,8 @@ public class GameManager : MonoBehaviour
 			bulletCountText.SetText(bulletCount.ToString());
 
 			cardManager.FinalizeTurn();
+			
+			UpdateBulletCount();
 			
         }
 		

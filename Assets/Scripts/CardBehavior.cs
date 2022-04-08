@@ -14,14 +14,19 @@ public class CardBehavior : MonoBehaviour
 	public CardState cardState;
 	
 	public GameObject inkHolder;
+	
+	public Material defaultMaterial;
+	public Material freezeMaterial;
 
 	private GameManager gameManager;
 
     private Animation cardAnimation;
 	private TextMeshPro cardText;
 	
+	public MeshRenderer meshRenderer;
+	
 	private string currentAnimation = ""; //the name of the animation currently being played, or an empty string should there be no currently playing animation.
-    
+	
 	//Awake gets called on instantiation, unlike Start, which gets called on the next frame.
     private void Awake()
     {
@@ -31,6 +36,8 @@ public class CardBehavior : MonoBehaviour
 		// get game manager reference as card is instantiated.
 		GameObject gameManagerObject = GameObject.Find("Game Manager");
 		gameManager = gameManagerObject.GetComponent<GameManager>();
+		
+		meshRenderer = GetComponent<MeshRenderer>();
 		
     }
 

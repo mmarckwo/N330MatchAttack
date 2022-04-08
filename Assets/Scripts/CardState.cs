@@ -75,6 +75,28 @@ public class CardState{
 		
 		this.cardBehavior.inkHolder.SetActive(this.coating == COATING.INKED);
 		
+		if(this.coating == COATING.ICED){
+			
+			/*Material[] newMaterials = new Material[1];
+			
+			newMaterials[0] = this.cardBehavior.freezeMaterial;
+			
+			this.cardBehavior.meshRenderer.materials = newMaterials;*/
+			
+			this.cardBehavior.meshRenderer.material = this.cardBehavior.freezeMaterial;
+			
+		}else{
+			
+			/*Material[] newMaterials = new Material[1];
+			
+			newMaterials[0] = this.cardBehavior.defaultMaterial;
+			
+			this.cardBehavior.meshRenderer.materials = newMaterials;*/
+			
+			this.cardBehavior.meshRenderer.material = this.cardBehavior.defaultMaterial;
+			
+		}
+		
 		//set visual position of card
 		
 		if(this.matched){
