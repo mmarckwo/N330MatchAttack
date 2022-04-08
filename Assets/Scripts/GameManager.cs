@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -40,15 +38,7 @@ public class GameManager : MonoBehaviour
 	int numberOfFlippedCards = 0;
 	
 	public int bulletCount = 1;
-	public float health = 10;
-	private float maxHealth;
-	public TextMeshProUGUI bulletCountText;
-
-	[Header("HP UI")]
-	public Image healthBarFill;
-	public Color goodHealth = new Color(69, 255, 137);
-	public Color lowHealth = new Color(255, 0, 85);
-
+	public int health = 30;
 
 	//todo: we should have a discussion about this.
 	public CardManager cardManager;
@@ -241,7 +231,7 @@ public class GameManager : MonoBehaviour
 			
 		}else{
 			
-			TakeDamage();
+			this.health--;
 			UnflipUnmatchedCards();
 
 		}
@@ -262,8 +252,7 @@ public class GameManager : MonoBehaviour
         {
 			card.GetComponent<CardBehavior>().Remove();
 			bulletCount -= 1;
-			bulletCountText.SetText(bulletCount.ToString());
-
+			
 			cardManager.FinalizeTurn();
 			
         }
@@ -350,36 +339,7 @@ public class GameManager : MonoBehaviour
 		
 		this.turnState = TURN_STATE.TURN_BEGIN;
 		this.animationState = ANIMATION_STATE.NOT_ANIMATING;
-
-		// set max health value to starting hp.
-		maxHealth = health;
-
-		// initialize bullet count.
-		UpdateBulletCount(bulletCount.ToString());
-
-	}
-
-	void TakeDamage()
-    {
-		health--;
-
-		// make the health bar red when the player is at low HP.
-		if ((health / maxHealth <= .30) || (health == 1))
-		{
-			healthBarFill.color = lowHealth;
-		}
-
-		if (health == 0)
-		{
-			Debug.Log("You are dead.");
-		}
-
-		// update health bar fill amount.
-		healthBarFill.fillAmount = health / maxHealth;
+		
 	}
 	
-	void UpdateBulletCount(string count)
-    {
-		bulletCountText.SetText(count);
-    }
 }

@@ -155,8 +155,6 @@ public class CardManager : MonoBehaviour{
 		//check if all cards are cleared here
 		
 		//then update visuals
-
-		// leave UI updates to the game manager? unless this is just for debugging.
 		
 		updateAllVisuals();
 		
