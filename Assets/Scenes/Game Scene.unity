@@ -1163,14 +1163,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< Updated upstream
   turnState: 0
   animationState: 0
   windP: {fileID: 490443549}
   bulletCount: 1
   health: 10
   cardManager: {fileID: 5434050486993976238}
-=======
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
@@ -1197,7 +1195,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1787497423}
   m_CullTransparentMesh: 1
->>>>>>> Stashed changes
 --- !u!1 &1824273868
 GameObject:
   m_ObjectHideFlags: 0
