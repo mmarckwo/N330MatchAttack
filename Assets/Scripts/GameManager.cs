@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
 	
 	public TURN_STATE turnState;
 	public ANIMATION_STATE animationState;
+	bool viewingDiscardPile = false;
 	
 	public ParticleSystem windP;
 	
@@ -45,12 +46,19 @@ public class GameManager : MonoBehaviour
 	private float maxHealth;
 	public TextMeshProUGUI bulletCountText;
 
-	[Header("HP UI")]
+	[Header("HP/UI")]
+	
+	public GameObject gameCamera;
+	private Vector3 gameCameraTargetPosition;
+	public float gameCameraLerpSpeed;
+	
 	public Image healthBarFill;
 	public Color goodHealth = new Color(69, 255, 137);
 	public Color lowHealth = new Color(255, 0, 85);
 	// higher lerp speed goes faster.
-	public float lerpSpeed = 5;
+	public float healthLerpSpeed = 5;
+	
+	public Text discardButtonText;
 
 	[Header("Sounds")]
 	public AudioSource FlameSound;
@@ -65,12 +73,15 @@ public class GameManager : MonoBehaviour
 	public AudioSource FlipSound;
 
 	[Header("Card Manager")]
-	//todo: we should have a discussion about this.
 	public CardManager cardManager;
 
     private void Update()
     {
+		
 		HPLerp();
+		
+		CameraLerp();
+		
     }
 
     public void AddFlippedCard(CardState cardState)
@@ -437,6 +448,9 @@ public class GameManager : MonoBehaviour
 
 		// initialize bullet count.
 		UpdateBulletCount();
+		
+		//initialize camera target
+		this.gameCameraTargetPosition = this.gameCamera.transform.position;
 
 	}
 
@@ -462,7 +476,18 @@ public class GameManager : MonoBehaviour
     {
 		// goes in Update() to animate lerp.
 		// update health bar fill amount.
-		healthBarFill.fillAmount = Mathf.Lerp(healthBarFill.fillAmount, (health / maxHealth), Time.deltaTime * lerpSpeed);
+		healthBarFill.fillAmount = Mathf.Lerp(healthBarFill.fillAmount, (health / maxHealth), Time.deltaTime * healthLerpSpeed);
+	}
+	
+	void CameraLerp()
+	{
+		
+		float newX = Mathf.Lerp(gameCamera.transform.position.x,gameCameraTargetPosition.x,Time.deltaTime * gameCameraLerpSpeed);
+		
+		gameCamera.transform.position = new Vector3(newX,gameCamera.transform.position.y,gameCamera.transform.position.z);
+		
+		//gameCameraTargetPosition*gameCameraLerp + gameCamera.transform.position*(1.0f-gameCameraLerp);
+		
 	}
 	
 	void UpdateBulletCount()
@@ -470,4 +495,23 @@ public class GameManager : MonoBehaviour
 		string count = bulletCount.ToString();
 		bulletCountText.SetText(count);
     }
+	
+	public void ShowDiscardButtonClicked(){
+		
+		if(!viewingDiscardPile){
+			
+			this.gameCameraTargetPosition = new Vector3(this.cardManager.discardCenter.position.x,gameCamera.transform.position.y,gameCamera.transform.position.z);
+			this.discardButtonText.text = "Back";
+			
+		}else{
+			
+			this.gameCameraTargetPosition = new Vector3(0.0f,gameCamera.transform.position.y,gameCamera.transform.position.z);
+			this.discardButtonText.text = "Show Discard";
+			
+		}
+		
+		viewingDiscardPile = !viewingDiscardPile;
+		
+	}
+	
 }

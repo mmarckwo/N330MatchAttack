@@ -49,4 +49,21 @@ MonoBehaviour:
   bulletCount: 1
   health: 10
   bulletCountText: {fileID: 0}
+  gameCamera: {fileID: 0}
+  gameCameraLerpSpeed: 5
+  healthBarFill: {fileID: 0}
+  goodHealth: {r: 0.27058825, g: 1, b: 0.5372549, a: 1}
+  lowHealth: {r: 1, g: 0, b: 0.33333334, a: 1}
+  healthLerpSpeed: 5
+  discardButtonText: {fileID: 0}
+  FlameSound: {fileID: 0}
+  FreezeSound: {fileID: 0}
+  WindSound: {fileID: 0}
+  InkSound: {fileID: 0}
+  NullSound: {fileID: 0}
+  ThunderSound: {fileID: 0}
+  ReloadSound: {fileID: 0}
+  ShootSound: {fileID: 0}
+  HurtSound: {fileID: 0}
+  FlipSound: {fileID: 0}
   cardManager: {fileID: 0}
