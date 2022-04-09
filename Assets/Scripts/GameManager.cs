@@ -343,7 +343,9 @@ public class GameManager : MonoBehaviour
 		//called when the user attempts to shoot a card.
 		//removes a card if there's enough bullets.
 		
-		if(bulletCount >= 1)
+		CardBehavior cardBehavior = card.GetComponent<CardBehavior>();
+		
+		if(bulletCount >= 1 && cardBehavior != null && !cardBehavior.cardState.matched)
         {
 			ShootSound.Play();
 			card.GetComponent<CardBehavior>().Remove();

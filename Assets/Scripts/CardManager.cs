@@ -147,6 +147,8 @@ public class CardManager : MonoBehaviour{
 				cards[i].discardIndex = this.nextDiscardIndex;
 				this.nextDiscardIndex++;
 				
+				cards[i].coating = CardState.COATING.NONE;
+				
 			}
 			
 		}
