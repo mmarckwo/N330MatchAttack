@@ -9,7 +9,7 @@ public class CardState{
 	//the type of card it is.
 	public enum CARD_TYPE{
 		
-		WIND,
+		WIND = 0,
 		NULL,
 		WILD,
 		LIGHTNING,
@@ -74,6 +74,7 @@ public class CardState{
 		//set ink stain
 		
 		this.cardBehavior.inkHolder.SetActive(this.coating == COATING.INKED);
+		this.cardBehavior.iconHolder.SetActive(this.coating != COATING.INKED);
 		
 		if(this.coating == COATING.ICED){
 			
@@ -190,6 +191,8 @@ public class CardState{
 			}
 			
 		}
+		
+		this.cardBehavior.iconRenderer.sprite = this.cardBehavior.iconSprites[(int)(this.cardType)];
 		
 	}
 	

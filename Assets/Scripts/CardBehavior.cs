@@ -24,7 +24,14 @@ public class CardBehavior : MonoBehaviour
     private Animation cardAnimation;
 	private TextMeshPro cardText;
 	
+	[HideInInspector]
 	public MeshRenderer meshRenderer;
+	
+	public GameObject iconHolder;
+	[HideInInspector]
+	public SpriteRenderer iconRenderer;
+	
+	public Sprite[] iconSprites;
 	
 	private string currentAnimation = ""; //the name of the animation currently being played, or an empty string should there be no currently playing animation.
 	
@@ -43,6 +50,8 @@ public class CardBehavior : MonoBehaviour
 		FlipSound = cardFlipSoundObject.GetComponent<AudioSource>();
 
 		meshRenderer = GetComponent<MeshRenderer>();
+		
+		iconRenderer = iconHolder.GetComponent<SpriteRenderer>();
 		
     }
 
