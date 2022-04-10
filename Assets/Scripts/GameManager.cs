@@ -654,7 +654,7 @@ public class GameManager : MonoBehaviour
 		
 		for(int i = 0; i < this.cardManager.cards.Length; i++){
 			
-			Destroy(this.cardManager.cards[i].cardBehavior.gameObject);
+			Destroy(this.cardManager.cards[i].cardBehavior.gameObject.transform.parent.gameObject);
 			
 		}
 		
