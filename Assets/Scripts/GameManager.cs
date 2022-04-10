@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
 		
 		WAIT_ON_UNFLIP,
 		
+		GAME_OVER,
+		
 	};
 	
 	public enum ANIMATION_STATE{
@@ -37,13 +39,17 @@ public class GameManager : MonoBehaviour
 	
 	public ParticleSystem windP;
 	
-	public CardState[] flippedCards = {null,null};
-	int numberOfFlippedCards = 0;
+	public CardState[] flippedCards = {null,null}; //cards we've flipped.
+	int numberOfFlippedCards = 0; //# of cards we've flipped.
+	[HideInInspector]
+	public int numberOfFlippableCards = 0; //# of cards we could flip
+	int numberOfUnmatchedCards = 0;
 	
 	// start with 1 bullet.
 	public int bulletCount = 1;
 	public float health = 10;
 	private float maxHealth;
+	private int maxBullets;
 	public TextMeshProUGUI bulletCountText;
 
 	[Header("HP/UI")]
@@ -59,6 +65,10 @@ public class GameManager : MonoBehaviour
 	public float healthLerpSpeed = 5;
 	
 	public Text discardButtonText;
+	
+	public GameObject gameOverScreen;
+	
+	public Text gameOverText;
 
 	[Header("Sounds")]
 	public AudioSource FlameSound;
@@ -97,7 +107,7 @@ public class GameManager : MonoBehaviour
 
 		FlipSound.Play();
 		this.animationState = ANIMATION_STATE.UNFLIP_CARDS;
-		this.turnState = TURN_STATE.WAIT_ON_UNFLIP;
+		SwitchTurnState(TURN_STATE.WAIT_ON_UNFLIP);
 
 		for(int i = 0; i < cardManager.cards.Length; i++){
 
@@ -318,7 +328,7 @@ public class GameManager : MonoBehaviour
 			
 			if(this.animationState != ANIMATION_STATE.SHOW_PAIR){
 				
-				this.turnState = TURN_STATE.TURN_BEGIN;
+				SwitchTurnState(TURN_STATE.TURN_BEGIN);
 				this.animationState = ANIMATION_STATE.NOT_ANIMATING;
 				this.numberOfFlippedCards = 0;
 				
@@ -360,15 +370,34 @@ public class GameManager : MonoBehaviour
 		
     }
 	
-	public bool PlayerCanInput(CardBehavior card){
+	public bool PlayerCanInput(CardState cardState, bool assumeTurnStateAndNumber = false){
 		
-		if(!(this.turnState == TURN_STATE.TURN_BEGIN || this.turnState == TURN_STATE.FLIP_ONE)) return(false);
+		if(!assumeTurnStateAndNumber){
+			
+			//check if we're on the wrong turn and if there are not enough cards to attempt a match.
+			//these checks get skipped if assumeTurnStateAndNumber is set (used to count flippable cards.)
+			
+			if(!(this.turnState == TURN_STATE.TURN_BEGIN || this.turnState == TURN_STATE.FLIP_ONE)) return(false);
+			
+			if(this.numberOfFlippableCards < 2) return(false);
+			
+		}
 		
-		if(card.cardState.coating == CardState.COATING.ICED) return(false);
+		if(cardState.coating == CardState.COATING.ICED) return(false);
+		
+		if(cardState.matched) return(false);
 		
 		return(true);
 		
 	}
+	
+	public bool PlayerCanInput(CardBehavior card, bool assumeTurnStateAndNumber = false){
+		
+		return(PlayerCanInput(card.cardState,assumeTurnStateAndNumber));
+		
+	}
+	
+	
 	
 	public void AdvanceStateOnFlip(){
 		
@@ -376,7 +405,7 @@ public class GameManager : MonoBehaviour
 			
 			case(TURN_STATE.TURN_BEGIN):{
 				
-				this.turnState = TURN_STATE.FLIP_ONE;
+				SwitchTurnState(TURN_STATE.FLIP_ONE);
 				this.animationState = ANIMATION_STATE.FLIP_ONE;
 				
 				break;
@@ -384,7 +413,7 @@ public class GameManager : MonoBehaviour
 			}
 			case(TURN_STATE.FLIP_ONE):{
 				
-				this.turnState = TURN_STATE.FLIP_TWO;
+				SwitchTurnState(TURN_STATE.FLIP_TWO);
 				this.animationState = ANIMATION_STATE.FLIP_TWO;
 				
 				break;
@@ -423,9 +452,9 @@ public class GameManager : MonoBehaviour
 			}
 			case(ANIMATION_STATE.UNFLIP_CARDS):{
 				
-				this.turnState = TURN_STATE.TURN_BEGIN;
+				SwitchTurnState(TURN_STATE.TURN_BEGIN);
 				this.animationState = ANIMATION_STATE.NOT_ANIMATING;
-				
+					
 				break;
 				
 			}
@@ -440,38 +469,96 @@ public class GameManager : MonoBehaviour
 			
 	}
 	
-	public void Start(){
+	public void SwitchTurnState(TURN_STATE newState){
 		
-		this.turnState = TURN_STATE.TURN_BEGIN;
-		this.animationState = ANIMATION_STATE.NOT_ANIMATING;
-
-		// set max health value to starting hp.
-		maxHealth = health;
-
-		// initialize bullet count.
-		UpdateBulletCount();
+		bool switchState = true;
 		
-		//initialize camera target
-		this.gameCameraTargetPosition = this.gameCamera.transform.position;
-
+		switch(this.turnState){
+			
+			case(TURN_STATE.GAME_OVER):{
+				
+				switchState = false;
+				
+				break;
+				
+			}
+			default:{
+				
+				break;
+				
+			}
+			
+		}
+		
+		if(switchState){
+			
+			this.turnState = newState;
+			
+		}
+		
 	}
-
+	
+	
+	
+	public void PrepareTurn(){
+		
+		//prepare for new turn.
+		
+		//count number of flippable and unmatched cards.
+		
+		this.numberOfFlippableCards = 0;
+		
+		this.numberOfUnmatchedCards = 0;
+		
+		for(int i = 0; i < this.cardManager.cards.Length; i++){
+			
+			if(!this.cardManager.cards[i].matched){
+				
+				this.numberOfUnmatchedCards++;
+				
+			}
+			
+			if(PlayerCanInput(this.cardManager.cards[i],true)){
+				
+				this.numberOfFlippableCards++;
+				
+			}
+			
+		}
+		
+		if(this.numberOfUnmatchedCards == 0){
+			
+			SetGameOver(true);
+			
+		}else{
+			
+			List<System.Tuple<int,int>> matches = cardManager.FindAllMatches();
+			
+			if(matches.Count == 0 && this.bulletCount == 0){
+				
+				SetGameOver(false);
+				
+			}
+			
+		}
+		
+		//Debug.Log(this.numberOfFlippableCards);
+		
+	}
+	
 	void TakeDamage()
     {
 
 		HurtSound.Play();
 		health--;
 
-		// make the health bar red when the player is at low HP.
-		if ((health / maxHealth <= .30) || (health == 1))
-		{
-			healthBarFill.color = lowHealth;
-		}
-
 		if (health == 0)
 		{
-			Debug.Log("You are dead.");
+			
+			SetGameOver(false);
+			
 		}
+		
 	}
 
 	void HPLerp()
@@ -479,6 +566,21 @@ public class GameManager : MonoBehaviour
 		// goes in Update() to animate lerp.
 		// update health bar fill amount.
 		healthBarFill.fillAmount = Mathf.Lerp(healthBarFill.fillAmount, (health / maxHealth), Time.deltaTime * healthLerpSpeed);
+		
+		// make the health bar red when the player is at low HP.
+		if ((healthBarFill.fillAmount <= .30) || (health == 1))
+		{
+			
+			healthBarFill.color = lowHealth;
+			
+		}
+		else
+		{
+			
+			healthBarFill.color = goodHealth;
+			
+		}
+		
 	}
 	
 	void CameraLerp()
@@ -498,6 +600,26 @@ public class GameManager : MonoBehaviour
 		bulletCountText.SetText(count);
     }
 	
+	void SetGameOver(bool won){
+		
+		SwitchTurnState(TURN_STATE.GAME_OVER);
+		
+		if(won){
+			
+			gameOverText.text = "You Won!";
+			
+		}else{
+			
+			gameOverText.text = "You Lost!";
+			
+		}
+		
+		gameOverScreen.SetActive(true);
+		
+	}
+	
+	
+	
 	public void ShowDiscardButtonClicked(){
 		
 		if(!viewingDiscardPile){
@@ -515,5 +637,54 @@ public class GameManager : MonoBehaviour
 		viewingDiscardPile = !viewingDiscardPile;
 		
 	}
+	
+	public void RestartGameButtonClicked(){
+		
+		gameOverScreen.SetActive(false);
+		
+		RemoveAllCards();
+		
+		cardManager.Restart();
+		
+	}
+	
+	
+	
+	public void RemoveAllCards(){
+		
+		for(int i = 0; i < this.cardManager.cards.Length; i++){
+			
+			Destroy(this.cardManager.cards[i].cardBehavior.gameObject);
+			
+		}
+		
+	}
+	
+	public void Restart(){
+		
+		this.health = this.maxHealth;
+		this.bulletCount = this.maxBullets;
+		
+		this.turnState = TURN_STATE.TURN_BEGIN;
+		this.animationState = ANIMATION_STATE.NOT_ANIMATING;
+
+		// update bullet counter
+		UpdateBulletCount();
+		
+		//initialize camera target
+		this.gameCameraTargetPosition = this.gameCamera.transform.position;
+		
+		PrepareTurn();
+		
+	}
+
+	public void Awake(){
+		
+		// set max health value to starting hp. Same with bullets.
+		maxHealth = health;
+		maxBullets = bulletCount;
+
+	}
+	
 	
 }
