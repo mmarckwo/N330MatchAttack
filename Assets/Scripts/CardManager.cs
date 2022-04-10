@@ -46,6 +46,7 @@ public class CardManager : MonoBehaviour{
 			cards[i] = new CardState(instantiated);
 			
 			cards[i].cardType = startingTypes[i];
+			//cards[i].cardType = CardState.CARD_TYPE.FREEZE;
 			cards[i].setCoordinates(this,i);
 			
 		}
@@ -87,7 +88,7 @@ public class CardManager : MonoBehaviour{
 		
 	}
 	
-	public System.Tuple<int,int> FindRandomMatch(){
+	public List<System.Tuple<int,int>> FindAllMatches(){
 		
 		List<System.Tuple<int,int>> pairs = new List<System.Tuple<int,int>>();
 		
@@ -108,6 +109,14 @@ public class CardManager : MonoBehaviour{
 			}
 			
 		}
+		
+		return(pairs);
+		
+	}
+	
+	public System.Tuple<int,int> FindRandomMatch(){
+		
+		List<System.Tuple<int,int>> pairs = FindAllMatches();
 		
 		if(pairs.Count > 0){
 			
@@ -153,24 +162,15 @@ public class CardManager : MonoBehaviour{
 			
 		}
 		
-		
-		//check if all cards are cleared here
+		//todo: check if all cards are cleared here
 		
 		//then update visuals
-
-		// leave UI updates to the game manager? unless this is just for debugging.
 		
 		updateAllVisuals();
 		
-		string uiString = "Health: ";
+		//prepare next turn
 		
-		uiString += this.gameManager.health;
-		
-		uiString += " Bullets: ";
-		
-		uiString += this.gameManager.bulletCount;
-		
-		Debug.Log(uiString);
+		gameManager.PrepareTurn();
 		
 	}
 	
@@ -188,12 +188,20 @@ public class CardManager : MonoBehaviour{
 		
 	}*/
 	
-	void Start(){
+	public void Restart(){
 		
 		this.nextDiscardIndex = 0;
 		initializeCards();
 		shuffleCards();
 		updateAllVisuals();
+		
+		gameManager.Restart();
+		
+	}
+	
+	void Start(){
+		
+		Restart();
 		
 	}
 	
