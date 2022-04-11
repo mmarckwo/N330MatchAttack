@@ -12,6 +12,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4068373912626513877, guid: 99d5ea30899172f44ae94b730be664db, type: 3}
     - target: {fileID: 5855706068622293505, guid: af30c0460e429084699ad1b9eff4b794, type: 3}
+      propertyPath: ShapeModule.arc.mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5855706068622293505, guid: af30c0460e429084699ad1b9eff4b794, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
       value: 0
       objectReference: {fileID: 0}
@@ -29,7 +33,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5855706068622293506, guid: af30c0460e429084699ad1b9eff4b794, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.13
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5855706068622293506, guid: af30c0460e429084699ad1b9eff4b794, type: 3}
       propertyPath: m_LocalPosition.y
