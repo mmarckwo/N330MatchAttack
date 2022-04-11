@@ -98,7 +98,7 @@ public class CardManager : MonoBehaviour{
 			
 			for(int j = i+1; j < cards.Length; j++){
 				
-				if(!cards[j].matched && cards[j].IsMatch(cards[i])){
+				if(!cards[j].matched && cards[j].IsMatch(cards[i]) && gameManager.PlayerCanInput(cards[i],true) && gameManager.PlayerCanInput(cards[j],true)){
 					
 					System.Tuple<int,int> newPair = new System.Tuple<int,int>(i,j);
 					
