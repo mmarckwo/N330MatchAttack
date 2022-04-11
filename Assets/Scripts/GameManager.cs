@@ -544,7 +544,7 @@ public class GameManager : MonoBehaviour
 		}else{
 
 			List<System.Tuple<int,int>> matches = cardManager.FindAllMatches();
-
+			
 			if(matches.Count == 0 && this.bulletCount == 0){
 
 				SetGameOver(false);
